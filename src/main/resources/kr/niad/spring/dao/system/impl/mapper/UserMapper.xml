@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+<mapper namespace="kr.niad.spring.dao.system.impl.mapper.UserMapper">
+
+	<insert id="insert" parameterType="User" keyColumn="id" useGeneratedKeys="true">
+		insert into user(
+			login_id, passwd, name, email
+		) values (
+			#{loginId}, #{password}, #{name}, #{email}
+		)
+	</insert>
+
+
+	<resultMap id="user-resultmap" type="User" >
+		<id property="id" column="id" />
+		<result property="loginId" column="login_id" />
+		<result property="password" column="passwd" />
+		<result property="name" column="name" />
+		<result property="email" column="email" />
+	</resultMap>
+
+	<sql id="user-columns">
+		id, login_id, passwd, name, email
+	</sql>
+
+	<select id="select" parameterType="long" resultMap="user-resultmap">
+		select 
+		<include refid="user-columns"/>
+		from user
+		where id = #{id}
+	</select>
+	
+	<select id="selectAll" resultMap="user-resultmap">
+		select 
+		<include refid="user-columns"/>
+		from user
+	</select>
+	
+	
+	
+</mapper>
+	
+	
